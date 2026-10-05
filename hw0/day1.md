@@ -92,6 +92,12 @@ The source sends topic searches to the real Art Institute of Chicago artwork sea
 
 **Tests and observations I performed**
 
+When I searched for “human,” the app displayed results, but “Human Figure with Two Birds” showed “Image unavailable.” Its title was still visible. I could not determine whether the museum data lacked an image or the image failed to load, so this issue remains unresolved.
+
+![Human search showing an unavailable image](human-image-unavailable.png)
+
+
+
 I personally opened the museum’s search API in Chrome and saw JSON containing artwork data. An earlier app preview displayed “Failed to fetch.” I have not confirmed testing every interaction in the final version.
 
 I supplied final app screenshots showing cats search results with loaded artwork images and a second view with the first three cards’ details expanded. Earlier screenshots showed the bordered design; the final images replace them. The images provide evidence of these visible states, without establishing that I tested every interaction or every shortcut.
