@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Art Explorer</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; color: #fff; background: #222; font: 16px/1.5 system-ui, sans-serif; }
+    #background { position: fixed; inset: -5%; z-index: -1; opacity: .2; background: center/cover no-repeat; animation: drift 24s ease-in-out infinite alternate; }
+    @keyframes drift { to { transform: scale(1.08) translate(2%, -2%); } }
+    main { max-width: 1160px; min-height: 88vh; margin: 6vh auto; padding: 36px 44px; }
+    header { text-align: center; padding: 24px; border-radius: 20px; background: #191919b8; backdrop-filter: blur(12px); }
+    h1 { font: 400 clamp(2.25rem, 5vw, 3.25rem)/1.2 Georgia, serif; margin: 0 0 16px; }
+    header p { color: #ddd; margin: 0 0 24px; }
+    form { display: flex; gap: 8px; max-width: 760px; margin: auto; padding: 6px; border: 1px solid #ffffff30; border-radius: 14px; background: #151515c9; }
+    input { min-width: 0; flex: 1; padding: 12px; border: 0; border-radius: 8px; background: transparent; color: #fff; font: inherit; }
+    input::placeholder { color: #bbb; }
+    button { padding: 12px 24px; border: 1px solid #ffffff30; border-radius: 8px; background: #ffffff12; color: #fff; font: inherit; cursor: pointer; }
+    form button { background: #eee; color: #222; border-color: transparent; }
+    button:hover { background: #ffffff26; }
+    form button:hover { background: #fff; }
+    #shortcuts { display: flex; justify-content: center; gap: 12px; margin-top: 12px; }
+    :focus-visible { outline: 3px solid #ffce75; outline-offset: 4px; }
+    #status { text-align: center; min-height: 24px; width: fit-content; max-width: 100%; margin: 24px auto; padding: 8px 16px; border-radius: 12px; background: #191919b8; color: #ddd; }
+    #gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; align-items: start; }
+    article { border: 1px solid #ffffff18; border-radius: 16px; overflow: hidden; background: #202020d9; backdrop-filter: blur(12px); }
+    .image { height: 240px; padding: 16px; display: grid; place-items: center; background: #ffffff08; color: #ddd; }
+    .image img { width: 100%; height: 100%; object-fit: contain; min-height: 0; }
+    .caption { padding: 20px; }
+    h2 { font: 400 1.2rem/1.4 Georgia, serif; margin: 0 0 16px; }
+    summary { cursor: pointer; color: #ffce75; }
+    details p { margin: 12px 0 0; white-space: pre-line; overflow-wrap: anywhere; }
+    footer { text-align: center; width: fit-content; max-width: 100%; color: #ccc; margin: 32px auto 0; padding: 8px 16px; border-radius: 12px; background: #191919b8; font-size: .875rem; }
+    footer a { color: inherit; }
+    @media (max-width: 800px) { main { margin: 20px; padding: 28px 22px; } #gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 520px) { #gallery { grid-template-columns: 1fr; } main { margin: 12px; padding: 24px 16px; } button { padding: 12px; } }
+    @media (prefers-reduced-motion: reduce) { #background { animation: none; } }
+  </style>
+</head>
+<body>
+  <div id="background" aria-hidden="true"></div>
+  <main>
+    <header>
+      <h1>Art Explorer</h1>
+      <p>Start with something you love. Discover it in art.</p>
+      <form id="search">
+        <input id="topic" type="search" aria-label="Search artworks by topic" placeholder="Try cats, flowers, or city" required maxlength="100">
+        <button type="submit">Search</button>
+      </form>
+      <div id="shortcuts" role="group" aria-label="Topic shortcuts">
+        <button type="button" data-topic="cats">Cats</button>
+        <button type="button" data-topic="flowers">Flowers</button>
+        <button type="button" data-topic="city">City</button>
+      </div>
+    </header>
+    <p id="status" role="status" aria-live="polite">Search a topic to explore the collection.</p>
+    <section id="gallery" aria-label="Artwork results" aria-busy="false"></section>
+    <footer>Artworks and images from the <a href="https://www.artic.edu/">Art Institute of Chicago</a>.</footer>
+  </main>
+  <script>
+    // Page elements and shared state.
+    const form = document.querySelector('#search');
+    const topic = document.querySelector('#topic');
+    const gallery = document.querySelector('#gallery');
+    const status = document.querySelector('#status');
+    const background = document.querySelector('#background');
+    let controller, backgroundTimer;
+    const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+    // Topic shortcuts reuse the existing form submission and search.
+    document.querySelectorAll('#shortcuts button').forEach(button => {
+      button.addEventListener('click', () => {
+        topic.value = button.dataset.topic;
+        form.requestSubmit();
+      });
+    });
+    function element(tag, text, className) {
+      const node = document.createElement(tag);
+      if (text) node.textContent = text;
+      if (className) node.className = className;
+      return node;
+    }
+    // Build a card safely using text, with a built-in expand/collapse control.
+    function card(art, imageURL) {
+      const article = element('article');
+      const frame = element('div', '', 'image');
+      if (imageURL) {
+        const img = element('img');
+        img.alt = art.title || 'Artwork';
+        img.loading = 'lazy';
+        img.src = imageURL;
+        img.onerror = () => { frame.textContent = 'Image unavailable'; };
+        frame.append(img);
+      } else frame.textContent = 'Image unavailable';
+      const caption = element('div', '', 'caption');
+      const details = element('details');
+      caption.append(element('h2', art.title || 'Untitled artwork'));
+      details.append(element('summary', 'Artist & date'));
+      details.append(element('p', 'Artist: ' + (art.artist_display || 'Not listed')));
+      details.append(element('p', 'Date: ' + (art.date_display || 'Not listed')));
+      caption.append(details);
+      article.append(frame, caption);
+      return article;
+    }
+    // Fetch real results whenever the form is submitted.
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+      const query = topic.value.trim();
+      if (!query) { status.textContent = 'Enter a topic to search.'; return; }
+      controller?.abort();
+      controller = new AbortController();
+      const request = controller;
+      clearInterval(backgroundTimer);
+      background.style.backgroundImage = '';
+      gallery.replaceChildren();
+      gallery.setAttribute('aria-busy', 'true');
+      status.textContent = 'Finding artworks…';
+      const timeout = setTimeout(() => request.abort(), 15000);
+      try {
+        const params = new URLSearchParams({ params: JSON.stringify({ q: query, limit: 12,
+          fields: ['id', 'title', 'image_id', 'artist_display', 'date_display'],
+          query: { multi_match: { query, fields: ['title', 'artist_display', 'description', 'subject_titles'] } } }) });
+        const response = await fetch('https://api.artic.edu/api/v1/artworks/search?' + params, { signal: request.signal });
+        if (!response.ok) throw new Error('Request failed');
+        const result = await response.json();
+        if (!Array.isArray(result.data)) throw new Error('Invalid response');
+        if (request !== controller) return;
+        const images = [];
+        for (const art of result.data) {
+          const url = art.image_id ? 'https://www.artic.edu/iiif/2/' + encodeURIComponent(art.image_id) + '/full/843,/0/default.jpg' : '';
+          gallery.append(card(art, url));
+          if (url) images.push(url);
+        }
+        status.textContent = result.data.length ? `Showing ${result.data.length} artworks for “${query}”.` : `No artworks found for “${query}”. Try another topic.`;
+        // Randomly change the background using the current search's images.
+        const changeBackground = () => { background.style.backgroundImage = `url("${images[Math.floor(Math.random() * images.length)]}")`; };
+        if (images.length) {
+          changeBackground();
+          if (!reducedMotion.matches) backgroundTimer = setInterval(changeBackground, 12000);
+        }
+      } catch (error) {
+        if (request === controller) status.textContent = 'Could not load artworks. Please try searching again.';
+      } finally {
+        clearTimeout(timeout);
+        if (request === controller) gallery.setAttribute('aria-busy', 'false');
+      }
+    });
+  </script>
+</body>
+</html>
