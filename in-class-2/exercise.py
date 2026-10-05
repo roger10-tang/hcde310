@@ -31,7 +31,7 @@ count_the = 0
 for exhibit in exhibits:
     if "the" in exhibit.lower():
         count_the = count_the + 1
-print(f"{With "the"}: {count_the}")
+print(f"{With "the"}: {count_the}")  #why?
 
 
 # BONUS (optional): Python has a built-in function, enumerate(), that numbers items for you.
@@ -41,4 +41,3 @@ print(f"{With "the"}: {count_the}")
 # (Hint: it starts counting at 0 unless you tell it otherwise.)
 for number, exhibit in enumerate(exhibits, start=1):
     print(f"{number}. {exhibit}")
-    
