@@ -13,8 +13,10 @@ exhibits = [
 
 # 1. Print each exhibit on its own line, numbered starting at 1:   1. The Art of Everyday Life
 
-for number, exhibit in enumerate(exhibits, start=1):
-    print(f"{number}. {exhibit}")
+count = 0
+for exhibit in exhibits:
+    count = count + 1
+    print(f"{count}. {exhibit}")
 
 
 # 2. Print a blank line, then each exhibit in ALL CAPS followed by its length:   PAPER CUTS 10
@@ -37,3 +39,8 @@ print(f'With "the": {count_the}')
 # Your output should stay exactly the same, so check.py still passes.
 # Look it up: https://docs.python.org/3/library/functions.html#enumerate
 # (Hint: it starts counting at 0 unless you tell it otherwise.)
+
+# BONUS answer: replace the loop in #1 with these two lines.
+# Commented out here to avoid printing the exhibits twice.
+# for number, exhibit in enumerate(exhibits, start=1):
+#     print(f"{number}. {exhibit}")
