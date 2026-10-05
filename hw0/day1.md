@@ -24,6 +24,10 @@ Put the photo in this `hw0` folder, then change the filename below to match:
 
 I confirmed IMG_1055.jpg is my original sketch photo.
 
+![Sketch with the most important interaction marked](sketch-annotated.png)
+
+I added this annotation while revising the submission, after building the app. The red arrow marks the most important moment: the user searches a topic and related artworks appear. The original sketch is preserved above.
+
 ### 3. Our prediction
 
 I supplied the following prediction-notes screenshot when revising this submission. It covers the initial build, topic shortcuts, visual refinement, and code explanation. The screenshot does not establish when the notes were written; my earlier statement that I had not recorded a confirmed prediction before the first prompt remains part of the record.
