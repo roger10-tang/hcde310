@@ -26,7 +26,14 @@ I confirmed IMG_1055.jpg is my original sketch photo.
 
 ### 3. Our prediction
 
-I did not record a confirmed prediction before the first prompt. Looking back, I expected an app that followed my sketch, searched for real artworks, displayed images and titles, and let users expand artist and date details. This is retrospective, not an original prediction note.
+I supplied the following prediction-notes screenshot when revising this submission. It covers the initial build, topic shortcuts, visual refinement, and code explanation. The screenshot does not establish when the notes were written; my earlier statement that I had not recorded a confirmed prediction before the first prompt remains part of the record.
+
+![Prediction notes supplied during submission revision](prediction-notes.png)
+
+- **Initial build:** I expect the AI to follow my sketch and create an app where users can search for real artworks, browse images and titles, and expand the artist and date details.
+- **Topic shortcuts:** I expect the three topic buttons to fill in the search box and immediately search for Cats, Flowers, or City without changing the other features.
+- **Visual refinement:** I expect removing the heavy border and using subtle translucent surfaces to make the interface blend naturally with the artwork background while keeping it readable and within 150 lines.
+- **Code explanation:** I expect the AI to show the details-toggle code and explain how it works so I can understand why clicking a control expands only that artwork’s information.
 
 ## What we got
 
@@ -108,7 +115,7 @@ The AI additionally ran the course's unchanged `hello.py` while preparing the up
 
 **My number:** 50%
 
-**Why that number:** I only want to know the harness and structure; I do not need to know the details because AI can do them. This is my stated reason, lightly edited for spelling, rather than a claim that every implementation detail is verified.
+**Why that number:** My understanding is currently focused on the overall structure and the purpose of the main sections. After reviewing the explanation, I can describe how `<details>` and `<summary>` expand and collapse an artwork’s information. I still rely on AI for implementation details, so 50% does not mean I can independently explain or verify every line.
 
 ### 10. What would I need to know to tell whether it's *well designed or well built*?
 
