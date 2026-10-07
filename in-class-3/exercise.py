@@ -23,10 +23,10 @@ for visit in visits:
 print()
 for visit in visits:
     if visit.get("minutes", 0) >= 30:
-        label = "long"
+        time = "long"
     else:
-        label = "short"
-    print(visit["visitor"] + ": " + label)
+        time = "short"
+    print(visit["visitor"] + ": " + time)
 
 # 3. Print a blank line. Then build a dictionary counting visits per gallery, and print it:
 #       {'Impressionism': 3, 'Modern': 2, 'Photography': 2}
@@ -45,3 +45,5 @@ print(counts)
 # Is "short" honest? What would be a better default, and what would you print for Gus instead?
 # Who might be misled if this were a real museum report?
 # Write your answers as comments here. Don't change the output above, so check.py still passes.
+# We don't know how long Gus stayed. I'd use None and print "Gus: unknown".
+# Calling it "short" could make museum staff think he left quickly.
