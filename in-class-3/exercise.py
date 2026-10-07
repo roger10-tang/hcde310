@@ -22,11 +22,11 @@ for visit in visits:
 #    Gus has no "minutes". Use .get() so a missing value counts as 0.
 print()
 for visit in visits:
-    if visit.get("minutes", 0) >= 30:
+    if visit.get("minutes", 0) > 30:
         time = "long"
     else:
         time = "short"
-    print(visit["visitor"] + ": " + time)
+    print(visit["visitor"] + ":" + time)
 
 # 3. Print a blank line. Then build a dictionary counting visits per gallery, and print it:
 #       {'Impressionism': 3, 'Modern': 2, 'Photography': 2}
