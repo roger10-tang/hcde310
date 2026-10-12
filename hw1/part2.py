@@ -1,21 +1,24 @@
-# HW1 Part 2: Lists and loops
-# Run it:  python3 part2.py
-# Your output must match expected/part2.txt exactly.
-
 from artworks import titles
 
-for i in range(len(titles)):
-    print(f"{i + 1}. {titles[i]}")
+number = 1
+for title in titles:
+    print(f"{number}. {title}")
+    number = number + 1
 
-print(f"Titles: {len(titles)}")
+total = len(titles)
+print(f"Titles: {total}")
 
 count = 0
-longest = ""
 for title in titles:
-    if "a" in title.lower():
+    lowercase_title = title.lower()
+    if "a" in lowercase_title:
         count = count + 1
-    if len(title) > len(longest):
-        longest = title
-
 print(f'Titles with an "a": {count}')
+
+longest = titles[0]
+for title in titles:
+    title_length = len(title)
+    longest_length = len(longest)
+    if title_length > longest_length:
+        longest = title
 print(f"Longest: {longest}")

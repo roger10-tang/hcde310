@@ -1,6 +1,4 @@
 """Checks your output against the expected output.  Run:  python3 check.py
-
-GitHub runs this every time you push (the green check / red X next to your commit).
 """
 import subprocess, sys, pathlib, difflib
 
