@@ -13,13 +13,21 @@ from artworks import artworks
 
 
 def works_by(artist, artworks):
-    """TODO: one line saying what it takes and what it returns."""
-    pass
+    """Takes an artist name and an artwork list; returns matching titles."""
+    titles = []
+    for artwork in artworks:
+        if artwork.get("artist", "Unknown") == artist:
+            titles.append(artwork["title"])
+    return titles
 
 
 def count_by_artist(artworks):
-    """TODO: one line saying what it takes and what it returns."""
-    pass
+    """Takes an artwork list and returns a dictionary of counts by artist."""
+    counts = {}
+    for artwork in artworks:
+        artist = artwork.get("artist", "Unknown")
+        counts[artist] = counts.get(artist, 0) + 1
+    return counts
 
 
 print(works_by("Claude Monet", artworks))

@@ -10,3 +10,13 @@
 
 from artworks import artworks
 
+counts = {}
+
+for artwork in artworks:
+    artist = artwork.get("artist", "Unknown")
+    counts[artist] = counts.get(artist, 0) + 1
+
+print(counts)
+
+most_artist = max(counts, key=counts.get)
+print(f"Most works: {most_artist} ({counts[most_artist]})")
