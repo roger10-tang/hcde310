@@ -115,7 +115,6 @@ Start by searching near downtown Seattle, then use a returned course’s slug to
 Once those two requests work, you’ll have the course information needed to begin connecting your planner to Open-Meteo.
 
   
-13:00
 
-## Additional AI assistance
-Codex helped choose the APIs, explained the curl commands, organized the Resource 1 draft, and filled Resource 2 using my writing style and the saved response. I ran both API requests myself in Terminal. Codex also helped set up the folder, reviewed the submission, completed the access limits, and formatted the JSON before committing and pushing.
+
+
