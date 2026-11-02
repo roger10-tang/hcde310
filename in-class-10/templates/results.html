@@ -5,7 +5,7 @@
   <h1>Books by {{ author }}</h1>
   <ul>
   {% for book in books %}
-    <li>{{ book.title }}</li>
+    <li>{{ book.title }} — {{ book.first_publish_year or "Year unavailable" }}</li>
   {% endfor %}
   </ul>
   <a href="/">New search</a>

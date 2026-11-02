@@ -32,6 +32,10 @@ def results():
 
     # 5. No results, or nothing useful to show? → home page + message
 
+    # Skip entries without a usable title; a missing year is still useful.
+    books = [book for book in books
+             if isinstance(book, dict) and isinstance(book.get("title"), str)
+             and book["title"].strip()]
     if not books:
         return render_template("home.html", author=author, message="No books found. Check the author spelling or try another author.")
 
