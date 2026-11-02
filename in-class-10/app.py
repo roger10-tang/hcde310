@@ -15,9 +15,12 @@ def home():
 @app.route("/results")
 def results():
     # 1. Read the search term from the form
-    author = request.args.get("author_search", "")
+    author = request.args.get("author_search", "").strip()
 
     # 2. Empty input? → home page + message (check BEFORE calling the API)
+
+    if not author:
+        return render_template("home.html", message="Enter an author name to find books.")
 
     # 3. Call the API (fake data for now)
     books = get_books(author)
