@@ -32,5 +32,8 @@ def results():
 
     # 5. No results, or nothing useful to show? → home page + message
 
+    if not books:
+        return render_template("home.html", author=author, message="No books found. Check the author spelling or try another author.")
+
     # 6. Otherwise → results page
     return render_template("results.html", books=books, author=author)
