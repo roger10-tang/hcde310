@@ -9,10 +9,12 @@ app = Flask(__name__)
 def home():
     return render_template("home.html")
 
+# AI-written
 # Get the search term from the form
 @app.route("/results")
 def results():
     """Take a keyword and return a results page, or a message if empty."""
+    # Read the keyword and remove spaces at both ends.
     keyword = request.args.get("keyword", "").strip()
     # If the search term is empty, then show a message
     if keyword == "":
