@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request
 
+from api import search_art
+
 app = Flask(__name__)
 
 # Show the search form on the home page
@@ -15,9 +17,12 @@ def results():
     # If the search term is empty, then show a message
     if keyword == "":
         return render_template("home.html", message="Please enter a keyword.")
-    # Use fake artwork data first
-    artworks = [
-        {"title": "Sample artwork", "artist_title": "Sample artist", "date_display": "1900"}
-    ]
-    # Show the artworks on the results page
+    # Get real artworks instead of the fake data used in the first version.
+    artworks = search_art(keyword)
+    # None means the API failed; an empty list means no matches.
+    if artworks is None:
+        return render_template("home.html", message="Search is unavailable. Please try again later.")
+    if len(artworks) == 0:
+        return render_template("home.html", message="No artworks found. Try another keyword.")
+    # Show the artworks on the results page.
     return render_template("results.html", artworks=artworks, keyword=keyword)

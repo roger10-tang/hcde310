@@ -7,3 +7,5 @@ The API search function takes a keyword and returns artworks, or reports an API 
 The /results route takes the keyword from the form and shows results.html with the artworks or a message. I'll check a normal search, an empty search, and an API error. The page should also show a helpful message for no results and fallback text for missing artwork fields.
 
 Browser checks (fake data): "cat" showed Sample artwork - Sample artist (1900): pass. Back to search returned home: pass. Empty search showed "Please enter a keyword.": pass. Checked by the AI assistant.
+
+Real API: browser search for "cat" showed museum artworks: pass. API error, no results, and missing fields passed simulated Flask checks (not browser checks). Checks run by the AI assistant.
