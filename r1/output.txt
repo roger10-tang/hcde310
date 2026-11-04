@@ -1,0 +1,22 @@
+Pebble Beach Golf Links
+Location: Pebble Beach, California
+Holes: 18
+Par: 72
+Year built: Unavailable
+Layout: Pebble Beach Golf Links
+  Tee: Blue | Rating category: M | 6802 yards
+  Tee: Gold | Rating category: M | 6472 yards
+  Tee: Gold | Rating category: F | 6472 yards
+  Tee: Gold/White Combo | Rating category: M | 6242 yards
+  Tee: Gold/White Combo | Rating category: F | 6242 yards
+  Tee: White | Rating category: M | 6083 yards
+  Tee: White | Rating category: F | 6083 yards
+  Tee: White/Green Combo | Rating category: M | 5834 yards
+  Tee: White/Green Combo | Rating category: F | 5834 yards
+  Tee: Green | Rating category: M | 5547 yards
+  Tee: Green | Rating category: F | 5547 yards
+  Tee: Green/Red Combo | Rating category: M | 5416 yards
+  Tee: Green/Red Combo | Rating category: F | 5416 yards
+  Tee: Red | Rating category: M | 5125 yards
+  Tee: Red | Rating category: F | 5125 yards
+Source: GolfCore https://www.golfcore.org/courses/pebble-beach/
