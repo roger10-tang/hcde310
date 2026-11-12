@@ -17,8 +17,11 @@ def results():
         return render_template("home.html", message="No search term entered.")
     try:
         artworks = get_artworks(artist)
-    except Exception as e:
-        return render_template("home.html", message=f"Something broke the request: {e}")
+    except Exception:
+        app.logger.exception("Artwork search failed")
+        return render_template(
+            "home.html", message="Search is unavailable. Please try again later."
+        ), 502
     return render_template("results.html", artist=artist, artworks=artworks)
 
 
